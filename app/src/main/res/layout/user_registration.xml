@@ -12,13 +12,28 @@
         android:layout_gravity="center_horizontal"
         android:alpha=".9"
         android:scaleType="centerInside"
-        android:src="@drawable/lego" />
+        android:src="@drawable/logo"
+        />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/full_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/username"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/rounded_border"
+        android:gravity="center"
+        android:hint="@string/full_name"
+        android:inputType="textWebPassword"
+        android:padding="10dp"
+        android:textColorHint="@android:color/white" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email"
         android:inputType="textWebEmailAddress"
         android:padding="10dp"
         android:textColorHint="@android:color/white"
@@ -27,7 +42,6 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"/>
-
 
     <EditText
         android:id="@+id/password_registration"
@@ -42,26 +56,13 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp" />
-    <EditText
-        android:id="@+id/full_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Full Name"
-        android:inputType="textWebPassword"
-        android:padding="10dp"
-        android:textColorHint="@android:color/white"
-        android:background="@drawable/rounded_border"
-        android:gravity="center"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="15dp" />
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/confirm_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textWebEmailAddress"
+        android:hint="@string/username"
+        android:inputType="textWebPassword"
         android:padding="10dp"
         android:textColorHint="@android:color/white"
         android:background="@drawable/rounded_border"
@@ -73,31 +74,31 @@
 
     <Button
         android:id="@+id/save"
-        android:layout_width="145dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_button"
-        android:text="Save"
+        android:text="@string/save"
         android:textAllCaps="false"
         android:textColor="#0D0E0D"
-        android:textSize="21dp" />
+        android:textSize="21sp" />
 
     <Button
         android:id="@+id/cancel"
-        android:layout_width="139dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_button"
-        android:text="Cancel"
+        android:text="@string/cancel"
         android:textAllCaps="false"
         android:textColor="#0D0E0D"
-        android:textSize="21dp" />
+        android:textSize="21sp" />
 
 
 </LinearLayout>
