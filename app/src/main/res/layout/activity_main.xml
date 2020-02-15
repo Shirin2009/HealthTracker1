@@ -15,13 +15,14 @@
         android:layout_centerVertical="true">
 
         <!-- Design the login page's icon-->
-        <ImageView
+        `<ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:alpha=".9"
             android:scaleType="centerInside"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            />
 
 
         <EditText

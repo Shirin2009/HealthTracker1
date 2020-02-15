@@ -10,5 +10,9 @@
     <string name="email">Email Address</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="signup">SignUp</string>
+    <string name="textview">TextView</string>
+    <string name="appointments">Appointments</string>
+    <string name="fitness">Fitness</string>
 
 </resources>

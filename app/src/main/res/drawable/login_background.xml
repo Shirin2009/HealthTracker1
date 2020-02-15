@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
    <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <!--setting the primary color as color primary-->
+android:shape="rectangle">
+<!--setting the primary color as color primary-->
 <gradient android:startColor="@color/colorPrimary"
     android:angle="270"/><!-- setting the angle to 270 degree-->
 
-    </shape>
+</shape>
