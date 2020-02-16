@@ -1,4 +1,4 @@
 package com.example.healthtracker
 
-class Appointments {
+class RegisterActivity {
 }

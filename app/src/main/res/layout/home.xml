@@ -89,7 +89,7 @@
         tools:layout_editor_absoluteY="565dp" />
 
     <Button
-        android:id="@+id/signup_btn"
+        android:id="@+id/signuphome_btn"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginBottom="48dp"

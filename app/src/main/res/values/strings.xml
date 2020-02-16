@@ -4,13 +4,11 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="signup">SignUp</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
     <string name="full_name">Full Name</string>
     <string name="email">Email Address</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
-    <string name="signup">SignUp</string>
+    <string name="signup1">SignUp</string>
     <string name="textview">TextView</string>
     <string name="appointments">Appointments</string>
     <string name="fitness">Fitness</string>
