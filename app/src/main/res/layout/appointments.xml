@@ -12,4 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         app:srcCompat="@drawable/appointment" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="245dp"
+        android:layout_height="303dp" />
 </LinearLayout>
