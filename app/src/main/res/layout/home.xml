@@ -89,12 +89,12 @@
         tools:layout_editor_absoluteY="565dp" />
 
     <Button
-        android:id="@+id/signuphome_btn"
+        android:id="@+id/logout_btn_home"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginBottom="48dp"
         android:background="@drawable/rounded_button"
-        android:text="@string/signup"
+        android:text="LogOut"
         android:textAllCaps="false"
         android:textColor="#0D0E0D"
         app:layout_constraintBottom_toBottomOf="parent"

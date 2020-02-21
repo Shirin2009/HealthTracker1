@@ -1,4 +1,12 @@
 package com.example.healthtracker
 
-class SignUpActivity {
-}
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+
+class SignUpActivity
+
+
+
+
+
+

@@ -1,8 +1,9 @@
 package com.example.healthtracker
 
 ///user class
-class UserModel(
-    val id: String ,
-    val password: String,
-    val fullName: String,
-    val email:String)
+class
+UserModel(
+    var id: String ="ID",
+    var password: String="",
+    var fullName: String="",
+    var email:String="")

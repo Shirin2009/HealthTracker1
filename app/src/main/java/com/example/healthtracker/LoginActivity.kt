@@ -9,7 +9,6 @@ import android.os.Bundle
 class LoginActivity:AppCompatActivity(), View.OnClickListener {
     private val activity = this@LoginActivity
 
-    private lateinit var inputValidation: UserInputValidation
     private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,17 +16,7 @@ class LoginActivity:AppCompatActivity(), View.OnClickListener {
 
         setContentView(R.layout.activity_main)
 
-        // hiding the action bar
-        supportActionBar!!.hide()
 
-        // initializing the views
-        initViews()
-
-        // initializing the listeners
-        initListeners()
-
-        // initializing the objects
-        initObjects()
     }
 
 
