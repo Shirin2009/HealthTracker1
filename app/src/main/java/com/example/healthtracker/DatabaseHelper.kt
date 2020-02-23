@@ -34,34 +34,62 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         //create table again
         onCreate(db)
     }
-/*
+
     //this method is for insert a data into database table
-    fun insertUser(thename: String, theemail: String, thepassword: String) {
+    fun insertUserData(name: String, email: String, password: String) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(COLUMN_NAME, thename)
-        contentValues.put(COLUMN_EMAIL, theemail)
-        contentValues.put(COLUMN_USER_PASSWORD, thepassword)
+        contentValues.put(COLUMN_NAME, name)
+        contentValues.put(COLUMN_EMAIL, email)
+        contentValues.put(COLUMN_USER_PASSWORD, password)
 
         db.insert(TABLE_USER, null, contentValues)
+        db.close()
     }
 
-    fun updateData(theid: String, thename: String, theemail: String, thepassword: String): Boolean {
-        val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(COLUMN_ID, theid)
-        contentValues.put(COLUMN_NAME, thename)
-        contentValues.put(COLUMN_EMAIL, theemail)
-        contentValues.put(COLUMN_USER_PASSWORD, thepassword)
-
-        db.update(TABLE_USER, contentValues, "ID=?", arrayOf(theid))
+    /**
+     * fun userPresents(id: String, name: String, email: String, password: String):Boolean{
+    val db=writableDatabase
+    val query= "select * from user where id= $id and name= $name and email = $email and password= $password"
+    val cursor = db.rawQuery(query,null)
+    if(cursor.count <= 0){
+    cursor.close()
+    return false
+    }
+    cursor.close()
+    return true
+    }
+     * */
+    //check if user exist
+    fun userPresents(email: String, password: String):Boolean{
+        val db=writableDatabase
+        val query= "select * from users where email = '$email' and password= '$password' "
+        val cursor = db.rawQuery(query,null)
+        if(cursor.count <= 0){
+            cursor.close()
+            return false
+        }
+        cursor.close()
         return true
     }
 
-    fun deleteData(theid: String): Int {
+    //alternative function fro checking if the user already exist
+   /** fun userPresent(id: String, name: String, email: String, password: String):Boolean{
         val db = this.writableDatabase
-        return db.delete(TABLE_USER, "ID=?", arrayOf(theid))
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_ID, id)
+        contentValues.put(COLUMN_NAME, name)
+        contentValues.put(COLUMN_EMAIL, email)
+        contentValues.put(COLUMN_USER_PASSWORD, password)
+        db.update(TABLE_USER, contentValues, "ID=?", arrayOf(id))
+        return true
     }
+    */
+    fun deleteData(id: String): Int {
+        val db = this.writableDatabase
+        return db.delete(TABLE_USER, "ID=?", arrayOf(id))
+    }
+
 
     fun isEmailExists(email: String): Boolean {
         val db = this.writableDatabase
@@ -83,7 +111,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
             return true
         } else false //if email does not exist return false
         //close()
-    }*/
+    }
 
     companion object {
         //database version

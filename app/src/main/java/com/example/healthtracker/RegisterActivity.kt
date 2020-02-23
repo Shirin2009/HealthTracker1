@@ -28,7 +28,8 @@ class RegisterActivity :AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.user_registration)
+        setContentView(R.layout.fitness)
+
         Register = findViewById<View>(R.id.save_registration) as Button
         Email = findViewById<View>(R.id.email_registration) as EditText
         Password = findViewById<View>(R.id.password_registration) as EditText
@@ -40,7 +41,7 @@ class RegisterActivity :AppCompatActivity() {
             // Creating SQLite table if dose n't exists.
             SQLiteTableBuild()
             // Checking EditText is empty or Not.
-            CheckEditTextStatus()
+           // CheckEditTextStatus()
             // Method to check Email is already exists or not.
             CheckingEmailAlreadyExistsOrNot()
             // Empty EditText After done inserting process.
@@ -98,7 +99,7 @@ class RegisterActivity :AppCompatActivity() {
     }
 
 
-    // Method to check EditText is empty or Not
+    /** Method to check EditText is empty or Not
     private fun CheckEditTextStatus() {
         NameHolder = Name!!.text.toString()
         EmailHolder = Email!!.text.toString()
@@ -109,7 +110,7 @@ class RegisterActivity :AppCompatActivity() {
         } else
         { true
         }
-    }
+    }*/
 
 
 // Checking Email is already exists or not.

@@ -1,128 +1,81 @@
 package com.example.healthtracker
 
-import android.content.Intent
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-
+import kotlinx.android.synthetic.main.login.*
+import kotlinx.android.synthetic.main.user_registration.*
 
 class MainActivity : AppCompatActivity() {
-    var dbHelper: DatabaseHelper?=null
-    var LoginButton:Button?=null
-    var EditTextEmptyHolder: Boolean? = null
-    var sqLiteDatabaseObj: SQLiteDatabase? = null
-    var RegisterButton: Button? = null
-    var Email: EditText? = null
-    var Password: EditText? = null
-    var EmailHolder: String? = null
-    val cursor: Cursor? = null
-    var PasswordHolder: String? = null
-    var TempPassword = "NOT_FOUND"
-
+    lateinit var dbHelper: DatabaseHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-      LoginButton=findViewById<View>(R.id.login_btn_main)as Button
-        //RegisterButton=findViewById<View>(R.id.save_registration)as Button
-        Email= findViewById<View>(R.id.login_email_txt_main)as EditText
-
-        Password = findViewById<View>(R.id.password_txt_main) as EditText
-        dbHelper = DatabaseHelper(this)
-        //Adding click listener to log in button.
-
-        //link the main activity to the user activity
+        dbHelper= DatabaseHelper(this)
+        showHome()
         login_btn_main.setOnClickListener {
-            val email= login_email_txt_main.text.toString().trim()
-            val password = password_txt_main.text.toString().trim()
-            // Calling EditText is empty or no method.
-           // checkEditTextStatus()
-            // Calling login method.
-           // loginFunction()
+            Toast.makeText(this,"hi there!", Toast.LENGTH_SHORT).show()
+            showLogin()
+
+        }
+
+        signup_txt_loin.setOnClickListener{
+            Toast.makeText(this,"hi there!", Toast.LENGTH_SHORT).show()
+            showRegistration()
+
+        }
+        signup_btn_main.setOnClickListener{
+            Toast.makeText(this,"hi there!", Toast.LENGTH_SHORT).show()
+            showRegistration()
+
+        }
+        save_registration.setOnClickListener{
+            dbHelper.insertUserData(full_name_registration.text.toString(),email_registration.text.toString(),password_registration.text.toString())
+            showHome()
+        }
+
+        login_btn_login.setOnClickListener{
+            val email= login_email_txt_login.text.toString().trim()
+            val password = password_txt_login.text.toString().trim()
+
+            if( dbHelper.userPresents(login_email_txt_login.text.toString(),password_txt_login.text.toString()))
+                Toast.makeText(this,"You are logged in.", Toast.LENGTH_SHORT).show()
+            else
+                Toast.makeText(this,"Incorrect Email or password.", Toast.LENGTH_SHORT).show()
+
             if(email.isEmpty()){
-                login_email_txt_main.error="Email required"
-                login_email_txt_main.requestFocus()
+                login_email_txt_login.error="Email required"
+                login_email_txt_login.requestFocus()
                 return@setOnClickListener
             }
 
             if(password.isEmpty()){
-                password_txt_main.error="Password required"
-                password_txt_main.requestFocus()
+                password_txt_login.error="Password required"
+                password_txt_login.requestFocus()
                 return@setOnClickListener
             }
 
         }
-
-        signup_btn_main.setOnClickListener{
-            val intent = Intent(this, RegisterActivity::class.java)
-            // start your next activity
-            startActivity(intent)
-        }
-
     }
 
-   /* private fun checkEditTextStatus() {
-        EmailHolder=Email!!.text.toString()
-        PasswordHolder=password_txt_main!!.text.toString()
-
-        EditTextEmptyHolder=
-            if (TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder))
-            {
-                false
-            }else{
-                true
-            }
+    private fun showRegistration(){
+        registration_layout.visibility = View.VISIBLE
+        login_layout.visibility = View.GONE
+        home_11.visibility = View.GONE
     }
 
-    fun loginFunction(){
-        if (EditTextEmptyHolder!!){
-            sqLiteDatabaseObj= dbHelper?.writableDatabase
-          val cursor =sqLiteDatabaseObj!!.query(
-                    DatabaseHelper.TABLE_USER,
-                null,
-                " " +DatabaseHelper.COLUMN_EMAIL.toString() +"=?",
-                arrayOf(EmailHolder),
-                null,
-                null,
-                null
-                    )
-            while(cursor.moveToNext()){
-                if (cursor.isFirst()){
-                    cursor.moveToFirst()
-                    TempPassword=cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_USER_PASSWORD))
-                    cursor.close()
-
-                }
-            }
-            CheckFinalresult()
-        }else{
-            Toast.makeText(this,"Please enter username or password.",Toast.LENGTH_LONG).show()
-        }
+    private fun showLogin(){
+        registration_layout.visibility = View.GONE
+        login_layout.visibility = View.VISIBLE
+        home_11.visibility = View.GONE
     }
 
-    private fun CheckFinalresult() {
-
-        if (TempPassword.equals(PasswordHolder,ignoreCase = true)){
-            Toast.makeText(this,"incorrect username or password",Toast.LENGTH_LONG).show()
-            // Going to Dashboard activity after login success message.
-            val intent = Intent(this,HomeActivity::class.java)
-            intent.putExtra(UserEmail,EmailHolder)
-            startActivity(intent)
-        }else{
-            Toast.makeText(this,"incorrect username or passwor, Please try again.",
-                Toast.LENGTH_LONG).show()
-        }
-        TempPassword="NOT_FOUND"
+    private fun showHome(){
+        registration_layout.visibility = View.GONE
+        login_layout.visibility = View.GONE
+        home_11.visibility = View.VISIBLE
     }
-
-companion object{
-    const val UserEmail=""
-}*/
 }
