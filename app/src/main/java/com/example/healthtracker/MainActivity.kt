@@ -1,5 +1,6 @@
 package com.example.healthtracker
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -17,9 +18,7 @@ class MainActivity : AppCompatActivity() {
         dbHelper= DatabaseHelper(this)
         showHome()
         login_btn_main.setOnClickListener {
-            Toast.makeText(this,"hi there!", Toast.LENGTH_SHORT).show()
             showLogin()
-
         }
 
         signup_txt_loin.setOnClickListener{
@@ -41,11 +40,6 @@ class MainActivity : AppCompatActivity() {
             val email= login_email_txt_login.text.toString().trim()
             val password = password_txt_login.text.toString().trim()
 
-            if( dbHelper.userPresents(login_email_txt_login.text.toString(),password_txt_login.text.toString()))
-                Toast.makeText(this,"You are logged in.", Toast.LENGTH_SHORT).show()
-            else
-                Toast.makeText(this,"Incorrect Email or password.", Toast.LENGTH_SHORT).show()
-
             if(email.isEmpty()){
                 login_email_txt_login.error="Email required"
                 login_email_txt_login.requestFocus()
@@ -57,7 +51,12 @@ class MainActivity : AppCompatActivity() {
                 password_txt_login.requestFocus()
                 return@setOnClickListener
             }
+           if(dbHelper.userPresents(login_email_txt_login.text.toString(), password_txt_login.text.toString())) {
+               startActivity(Intent(this, HomeActivity::class.java))
+           }
 
+            else
+              Toast.makeText(this,"Incorrect Email or password.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -71,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         registration_layout.visibility = View.GONE
         login_layout.visibility = View.VISIBLE
         home_11.visibility = View.GONE
+
     }
 
     private fun showHome(){

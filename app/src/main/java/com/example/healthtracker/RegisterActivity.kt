@@ -28,7 +28,7 @@ class RegisterActivity :AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fitness)
+        setContentView(R.layout.user_registration)
 
         Register = findViewById<View>(R.id.save_registration) as Button
         Email = findViewById<View>(R.id.email_registration) as EditText
@@ -38,7 +38,7 @@ class RegisterActivity :AppCompatActivity() {
 
         Register!!.setOnClickListener{
             SQLiteDataBaseBuild()
-            // Creating SQLite table if dose n't exists.
+            // Creating SQLite table if doesn't exists.
             SQLiteTableBuild()
             // Checking EditText is empty or Not.
            // CheckEditTextStatus()

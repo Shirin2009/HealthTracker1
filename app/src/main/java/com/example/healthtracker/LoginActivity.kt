@@ -1,59 +1,29 @@
 package com.example.healthtracker
 
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 
 
 class LoginActivity:AppCompatActivity(), View.OnClickListener {
-    private val activity = this@LoginActivity
-
+    //private val activity = this@LoginActivity
+    var btnLogin: Button? = null
+    var edtUsername: EditText? = null
+    var edtPassword: EditText? = null
+    var dbHelper: DatabaseHelper? = null
     private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.login)
 
-        setContentView(R.layout.activity_main)
+        dbHelper= DatabaseHelper(this)
+    }
 
-
+    override fun onClick(v: View?) {
     }
 
 
-     //This method is to initialize views
-    private fun initViews() {
-
-
-    }
-
-
-//This method is to initialize listeners
-    private fun initListeners() {
-
-    }
-
-
-    // This method is to initialize objects to be used
-    private fun initObjects() {
-
-    }
-
-
-    //This implemented method is to listen the click on view
-    override fun onClick(v: View) {
-
-    }
-
-
-   //This method is to validate the input text fields and verify login credentials from SQLite
-    private fun verifyFromSQLite() {
-
-
-    }
-
-
-   // This method is to empty all input edit text
-    private fun emptyInputEditText() {
-
-    }
 }
