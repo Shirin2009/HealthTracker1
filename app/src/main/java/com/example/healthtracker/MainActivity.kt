@@ -22,17 +22,45 @@ class MainActivity : AppCompatActivity() {
         }
 
         signup_txt_loin.setOnClickListener{
-            Toast.makeText(this,"hi there!", Toast.LENGTH_SHORT).show()
             showRegistration()
 
         }
+
         signup_btn_main.setOnClickListener{
-            Toast.makeText(this,"hi there!", Toast.LENGTH_SHORT).show()
             showRegistration()
 
         }
+
         save_registration.setOnClickListener{
+            val email= email_registration.text.toString().trim()
+            val password = password_registration.text.toString().trim()
+            val name:String=full_name_registration.text.toString().trim()
+
             dbHelper.insertUserData(full_name_registration.text.toString(),email_registration.text.toString(),password_registration.text.toString())
+
+
+            if(email.isEmpty()){
+                login_email_txt_login.error="Email required"
+                login_email_txt_login.requestFocus()
+                return@setOnClickListener
+            }
+
+            if(password.isEmpty()){
+                password_txt_login.error="Password required"
+                password_txt_login.requestFocus()
+                return@setOnClickListener
+            }
+
+            if(name.isEmpty()){
+                password_txt_login.error="Name required"
+                password_txt_login.requestFocus()
+                return@setOnClickListener
+            }
+            showHome()
+
+        }
+
+        cancel_registration.setOnClickListener{
             showHome()
         }
 
