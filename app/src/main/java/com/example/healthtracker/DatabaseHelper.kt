@@ -21,40 +21,16 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
             + DATE + " TEXT,"
             + " FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID +"))")
 
-    //create Fitness table SQL query
-    private val CREATE_TABLE_FITNESS = (" CREATE TABLE " + TABLE_FITNESS + "("
-            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_USER_ID + " INTEGER,"
-            + CALORIES_BURNED + " INTEGER,"
-            + DATE_TIME + " TEXT,"
-            + " FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID +"))")
-
-    //create Food table SQL query
-    private val CREATE_TABLE_FOOD = (" CREATE TABLE " + TABLE_FOOD + "("
-            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_USER_ID + " INTEGER,"
-            + CALORIES_GAINED + " INTEGER,"
-            + DATE_TIME + " TEXT,"
-            + " FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID +"))")
-
     //drop User table sql query
     private val DROP_USER_TABLE = " DROP TABLE IF EXISTS $TABLE_USER"
 
     //drop Sleep table sql query
     private val DROP_SLEEP_TABLE = " DROP TABLE IF EXISTS $TABLE_SLEEP"
 
-    //drop Fitness table sql query
-    private val DROP_FITNESS_TABLE = " DROP TABLE IF EXISTS $TABLE_FITNESS"
-
-    //drop Food table sql query
-    private val DROP_FOOD_TABLE = " DROP TABLE IF EXISTS $TABLE_FOOD"
-
     //this function is called once ( the first time of the execution), it creates the database tables using SQL query
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_TABLE_USER)
         db.execSQL(CREATE_TABLE_SLEEP)
-        db.execSQL(CREATE_TABLE_FITNESS)
-        db.execSQL(CREATE_TABLE_FOOD)
     }
 
     //this method will be called when we change the database version.
@@ -62,8 +38,6 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         //drop table if already exist
         db.execSQL(DROP_USER_TABLE)
         db.execSQL(DROP_SLEEP_TABLE)
-        db.execSQL(DROP_FITNESS_TABLE)
-        db.execSQL(DROP_FOOD_TABLE)
         //create table again
         onCreate(db)
     }
@@ -91,32 +65,6 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
 
         //inserting row into database
         db.insert(TABLE_SLEEP, null, contentValues)
-        db.close()
-    }
-
-    //this method is for insert a data into database Fitness table
-    fun insertFitnessData(userID: Int, caloriesBurned: Int, dateTime: String) {
-        val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(COLUMN_USER_ID, userID)
-        contentValues.put(CALORIES_BURNED, caloriesBurned)
-        contentValues.put(DATE_TIME, dateTime)
-
-        //inserting row into database
-        db.insert(TABLE_FITNESS, null, contentValues)
-        db.close()
-    }
-
-    //this method is for insert a data into database Food table
-    fun insertFoodData(userID: Int, caloriesGained: Int, dateTime: String) {
-        val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(COLUMN_USER_ID, userID)
-        contentValues.put(CALORIES_GAINED, caloriesGained)
-        contentValues.put(DATE_TIME, dateTime)
-
-        //inserting row into database
-        db.insert(TABLE_FOOD, null, contentValues)
         db.close()
     }
 
@@ -201,8 +149,6 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         //table names
         const val TABLE_USER = "users"
         const val TABLE_SLEEP = "sleep"
-        const val TABLE_FITNESS = "fitness"
-        const val TABLE_FOOD = "fitness"
         //ID column @primary key
         const val COLUMN_ID = "id"
         //column names for user details
@@ -213,12 +159,6 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         const val COLUMN_USER_ID = "userId"
         const val HOURS_SLEPT = "hoursSlept"
         const val DATE = "date"
-        //column names for fitness details
-        const val CALORIES_BURNED = "caloriesBurned"
-        const val DATE_TIME = "dateTime"
-        //column names for food details
-        const val CALORIES_GAINED = "caloriesGained"
-
         var currentUserID:Int = 0
     }
 }
