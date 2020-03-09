@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.login.*
 import kotlinx.android.synthetic.main.user_registration.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var dbHelper: DatabaseHelper
+    private lateinit var dbHelper: DatabaseHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,26 +36,32 @@ class MainActivity : AppCompatActivity() {
             val password = password_registration.text.toString().trim()
             val name:String=full_name_registration.text.toString().trim()
 
-            dbHelper.insertUserData(full_name_registration.text.toString(),email_registration.text.toString(),password_registration.text.toString())
-
-
-            if(email.isEmpty()){
-                login_email_txt_login.error="Email required"
-                login_email_txt_login.requestFocus()
-                return@setOnClickListener
+            when {
+                email.isEmpty() -> {
+                    login_email_txt_login.error="Email required"
+                    login_email_txt_login.requestFocus()
+                    return@setOnClickListener
+                }
+                password.isEmpty() -> {
+                    password_txt_login.error="Password required"
+                    password_txt_login.requestFocus()
+                    return@setOnClickListener
+                }
+                name.isEmpty() -> {
+                    password_txt_login.error="Name required"
+                    password_txt_login.requestFocus()
+                    return@setOnClickListener
+                }
+                dbHelper.userExists(email,password) -> {
+                    login_email_txt_login.error="This email is already being used"
+                    login_email_txt_login.requestFocus()
+                    return@setOnClickListener
+                }
+                else -> {
+                    dbHelper.insertUserData(full_name_registration.text.toString(),email_registration.text.toString(),password_registration.text.toString())
+                }
             }
 
-            if(password.isEmpty()){
-                password_txt_login.error="Password required"
-                password_txt_login.requestFocus()
-                return@setOnClickListener
-            }
-
-            if(name.isEmpty()){
-                password_txt_login.error="Name required"
-                password_txt_login.requestFocus()
-                return@setOnClickListener
-            }
             showHome()
 
         }
@@ -79,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 password_txt_login.requestFocus()
                 return@setOnClickListener
             }
-           if(dbHelper.userPresents(login_email_txt_login.text.toString(), password_txt_login.text.toString())) {
+           if(dbHelper.userExists(login_email_txt_login.text.toString(), password_txt_login.text.toString())) {
                startActivity(Intent(this, HomeActivity::class.java))
            }
 

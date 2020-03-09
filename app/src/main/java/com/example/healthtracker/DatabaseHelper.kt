@@ -4,32 +4,45 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+
 //extend to SQLiteOpenHelper to manage database creation and version management
 class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
-
-    //create table SQL query
+    //create User table SQL query
     private val CREATE_TABLE_USER = (" CREATE TABLE " + TABLE_USER + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME + " TEXT,"
             + COLUMN_EMAIL + " TEXT," + COLUMN_USER_PASSWORD + " TEXT" + ")")
 
-    //drop table sql query
+    //create Sleep table SQL query
+    private val CREATE_TABLE_SLEEP = (" CREATE TABLE " + TABLE_SLEEP + "("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_USER_ID + " INTEGER,"
+            + HOURS_SLEPT + " INTEGER,"
+            + DATE + " TEXT,"
+            + " FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID +"))")
+
+    //drop User table sql query
     private val DROP_USER_TABLE = " DROP TABLE IF EXISTS $TABLE_USER"
 
-    //this function is called once ( the first time of the execution), it creates the database table using SQL query
+    //drop Sleep table sql query
+    private val DROP_SLEEP_TABLE = " DROP TABLE IF EXISTS $TABLE_SLEEP"
+
+    //this function is called once ( the first time of the execution), it creates the database tables using SQL query
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_TABLE_USER)
+        db.execSQL(CREATE_TABLE_SLEEP)
     }
 
     //this method will be called when we change the database version.
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         //drop table if already exist
         db.execSQL(DROP_USER_TABLE)
+        db.execSQL(DROP_SLEEP_TABLE)
         //create table again
         onCreate(db)
     }
 
-    //this method is for insert a data into database table
+    //this method is for insert a data into database User table
     fun insertUserData(name: String, email: String, password: String) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
@@ -42,16 +55,45 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         db.close()
     }
 
-    fun userPresents(email: String, password: String):Boolean{
-    val db=writableDatabase
-    val query= "select * from users where email = '$email' and password = '$password' "
-    val cursor = db.rawQuery(query,null)
-    if(cursor.count <= 0){
-    cursor.close()
-    return false
+    //this method is for insert a data into database Sleep table
+    fun insertSleepData(userID: Int, hoursSlept: Int, date: String) {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_USER_ID, userID)
+        contentValues.put(HOURS_SLEPT, hoursSlept)
+        contentValues.put(DATE, date)
+
+        //inserting row into database
+        db.insert(TABLE_SLEEP, null, contentValues)
+        db.close()
     }
-    cursor.close()
-    return true
+
+    //check if user with given email and password exists
+    fun userExists(email: String, password: String):Boolean {
+        val db=writableDatabase
+        val query= "select * from users where email = '$email' and password = '$password' "
+        val cursor = db.rawQuery(query,null)
+        if(cursor.count <= 0){
+            cursor.close()
+            return false
+        }
+        cursor.moveToFirst()
+        currentUserID = (cursor.getString(cursor.getColumnIndex(COLUMN_ID))).toInt()
+        cursor.close()
+        return true
+    }
+
+    //check if hours slept for specified user this day exists
+    fun hoursSleptExists(userID: Int, date: String):Boolean {
+        val db=writableDatabase
+        val query= "select * from sleep where userId = '$userID' and date = '$date' "
+        val cursor = db.rawQuery(query,null)
+        if(cursor.count <= 0){
+            cursor.close()
+            return false
+        }
+        cursor.close()
+        return true
     }
 
     fun isUserExists(email: String, password: String): Boolean {
@@ -79,7 +121,6 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         return false
     }
 
-
     //updating user record
     fun updateUser(users: UserModel) {
         val db = this.writableDatabase
@@ -90,34 +131,34 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         values.put(COLUMN_USER_PASSWORD, users.password)
 
         // updating row
-        db.update(TABLE_USER, values, "$COLUMN_ID =?", arrayOf(users.id.toString()))
+        db.update(TABLE_USER, values, "$COLUMN_ID =?", arrayOf(users.id))
         db.close()
     }
 
     fun deleteUserData(users:UserModel){
         val db = this.writableDatabase
-        db.delete(TABLE_USER, "COLUMN_ID=?", arrayOf(users.id.toString()))
+        db.delete(TABLE_USER, "COLUMN_ID=?", arrayOf(users.id))
         db.close()
     }
-
-
 
     companion object {
         //database version
         const val DATABASE_VERSION = 1
         //database name
         const val DATABASE_NAME = "user.db"
-        //table name
+        //table names
         const val TABLE_USER = "users"
+        const val TABLE_SLEEP = "sleep"
         //ID column @primary key
         const val COLUMN_ID = "id"
         //column names for user details
         const val COLUMN_NAME = "name"
         const val COLUMN_EMAIL = "email"
         const val COLUMN_USER_PASSWORD = "password"
+        //column names for sleep details
+        const val COLUMN_USER_ID = "userId"
+        const val HOURS_SLEPT = "hoursSlept"
+        const val DATE = "date"
+        var currentUserID:Int = 0
     }
 }
-
-
-
-
