@@ -100,6 +100,51 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         db.close()
     }
 
+    //get appointments from database
+    fun getAppointments(userID: Int,selected: Int):MutableList<Appointment>? {
+
+        val db=writableDatabase
+        val query= "select * from appointment where userId = '$userID' and selected = '$selected' "
+        val cursor = db.rawQuery(query,null)
+        var appointments: MutableList<Appointment>? = null
+
+        if(cursor != null) {
+            var userID:Int
+            var description:String
+            var dateTime:String
+            var room:String
+            var doctorName:String
+            var selected:Int
+            var appointment:Appointment
+
+            for (i in 1..cursor.count) {
+                if (i==1) {
+                    cursor.moveToFirst()
+                    userID = (cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))).toInt()
+                    description = (cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)))
+                    dateTime = (cursor.getString(cursor.getColumnIndex(COLUMN_DATE_TIME)))
+                    room = (cursor.getString(cursor.getColumnIndex(COLUMN_ROOM)))
+                    doctorName = (cursor.getString(cursor.getColumnIndex(COLUMN_DOCTOR_NAME)))
+                    selected = (cursor.getString(cursor.getColumnIndex(COLUMN_SELECTED))).toInt()
+                    appointment = Appointment(userID,description,dateTime,room,doctorName,selected)
+                    appointments = mutableListOf(appointment)
+                } else {
+                    cursor.moveToNext()
+                    userID = (cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))).toInt()
+                    description = (cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)))
+                    dateTime = (cursor.getString(cursor.getColumnIndex(COLUMN_DATE_TIME)))
+                    room = (cursor.getString(cursor.getColumnIndex(COLUMN_ROOM)))
+                    doctorName = (cursor.getString(cursor.getColumnIndex(COLUMN_DOCTOR_NAME)))
+                    selected = (cursor.getString(cursor.getColumnIndex(COLUMN_SELECTED))).toInt()
+                    appointment = Appointment(userID,description,dateTime,room,doctorName,selected)
+                    appointments?.add(appointment)
+                }
+            }
+        }
+        cursor.close()
+        return appointments
+    }
+
     //check if user with given email and password exists
     fun userExists(email: String, password: String):Boolean {
         val db=writableDatabase

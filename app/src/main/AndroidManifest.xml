@@ -22,7 +22,7 @@
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".HomeActivity"/>
-        <activity android:name=".Appointments"/>
+        <activity android:name=".AppointmentsActivity"/>
         <activity android:name=".FitnessActivity"/>
         <activity android:name=".FoodActivity"/>
         <activity android:name=".SleepActivity"/>

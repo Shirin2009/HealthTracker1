@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.appointments.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Appointments : AppCompatActivity() {
+class AppointmentsActivity : AppCompatActivity() {
 
     var databaseHelper: DatabaseHelper? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +22,10 @@ class Appointments : AppCompatActivity() {
         setContentView(R.layout.appointments)
         databaseHelper = DatabaseHelper(this)
 
+        //show appointment data
+        val textView: TextView = findViewById(R.id.textView2) as TextView
+        val appointments:MutableList<Appointment>? = databaseHelper!!.getAppointments(DatabaseHelper.currentUserID,0)
+        textView.text = appointments!![1].doctorName
 
         //calender
         val calendarvalue=findViewById<View>(R.id.date_txt)
@@ -34,7 +38,7 @@ class Appointments : AppCompatActivity() {
                     cal.set(Calendar.YEAR,year)
                     cal.set(Calendar.MONTH,month)
                     cal.set(Calendar.DAY_OF_MONTH,dayOfMonth)
-                   // calendarvalue.text=SimpleDateFormat("MM/dd/yyyy",Locale.UK).format(cal.getTime())
+                    // calendarvalue.text=SimpleDateFormat("MM/dd/yyyy",Locale.UK).format(cal.getTime())
                 }
 
             }
