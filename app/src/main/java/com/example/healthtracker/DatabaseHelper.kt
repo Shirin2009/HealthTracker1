@@ -17,8 +17,19 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
     private val CREATE_TABLE_SLEEP = (" CREATE TABLE " + TABLE_SLEEP + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_USER_ID + " INTEGER,"
-            + HOURS_SLEPT + " INTEGER,"
-            + DATE + " TEXT,"
+            + COLUMN_HOURS_SLEPT + " INTEGER,"
+            + COLUMN_DATE + " TEXT,"
+            + " FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID +"))")
+
+    //create Appointment table SQL query
+    private val CREATE_TABLE_APPOINTMENT = (" CREATE TABLE " + TABLE_APPOINTMENT + "("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_USER_ID + " INTEGER,"
+            + COLUMN_DESCRIPTION + " TEXT,"
+            + COLUMN_DATE_TIME + " TEXT,"
+            + COLUMN_ROOM + " TEXT,"
+            + COLUMN_DOCTOR_NAME + " TEXT,"
+            + COLUMN_SELECTED + " INTEGER,"
             + " FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID +"))")
 
     //drop User table sql query
@@ -27,10 +38,14 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
     //drop Sleep table sql query
     private val DROP_SLEEP_TABLE = " DROP TABLE IF EXISTS $TABLE_SLEEP"
 
+    //drop Appointment table sql query
+    private val DROP_APPOINTMENT_TABLE = " DROP TABLE IF EXISTS $TABLE_APPOINTMENT"
+
     //this function is called once ( the first time of the execution), it creates the database tables using SQL query
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_TABLE_USER)
         db.execSQL(CREATE_TABLE_SLEEP)
+        db.execSQL(CREATE_TABLE_APPOINTMENT)
     }
 
     //this method will be called when we change the database version.
@@ -38,6 +53,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         //drop table if already exist
         db.execSQL(DROP_USER_TABLE)
         db.execSQL(DROP_SLEEP_TABLE)
+        db.execSQL(DROP_APPOINTMENT_TABLE)
         //create table again
         onCreate(db)
     }
@@ -60,11 +76,27 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(COLUMN_USER_ID, userID)
-        contentValues.put(HOURS_SLEPT, hoursSlept)
-        contentValues.put(DATE, date)
+        contentValues.put(COLUMN_HOURS_SLEPT, hoursSlept)
+        contentValues.put(COLUMN_DATE, date)
 
         //inserting row into database
         db.insert(TABLE_SLEEP, null, contentValues)
+        db.close()
+    }
+
+    //this method is for insert a data into database Appointment table
+    fun insertAppointmentData(userID: Int, description: String, dateTime: String, room: String, doctorName: String, selected: Int) {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_USER_ID, userID)
+        contentValues.put(COLUMN_DESCRIPTION, description)
+        contentValues.put(COLUMN_DATE_TIME, dateTime)
+        contentValues.put(COLUMN_ROOM, room)
+        contentValues.put(COLUMN_DOCTOR_NAME, doctorName)
+        contentValues.put(COLUMN_SELECTED, selected)
+
+        //inserting row into database
+        db.insert(TABLE_APPOINTMENT, null, contentValues)
         db.close()
     }
 
@@ -149,6 +181,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         //table names
         const val TABLE_USER = "users"
         const val TABLE_SLEEP = "sleep"
+        const val TABLE_APPOINTMENT = "appointment"
         //ID column @primary key
         const val COLUMN_ID = "id"
         //column names for user details
@@ -157,8 +190,15 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         const val COLUMN_USER_PASSWORD = "password"
         //column names for sleep details
         const val COLUMN_USER_ID = "userId"
-        const val HOURS_SLEPT = "hoursSlept"
-        const val DATE = "date"
+        const val COLUMN_HOURS_SLEPT = "hoursSlept"
+        const val COLUMN_DATE = "date"
+        //column names for appointment details
+        const val COLUMN_DESCRIPTION = "description"
+        const val COLUMN_DATE_TIME = "dateTime"
+        const val COLUMN_ROOM = "room"
+        const val COLUMN_DOCTOR_NAME = "doctorName"
+        const val COLUMN_SELECTED = "selected"
+
         var currentUserID:Int = 0
     }
 }

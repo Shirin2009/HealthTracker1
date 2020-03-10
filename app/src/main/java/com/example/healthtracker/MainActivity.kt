@@ -86,6 +86,8 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
            if(dbHelper.userExists(login_email_txt_login.text.toString(), password_txt_login.text.toString())) {
+               dbHelper.insertAppointmentData(DatabaseHelper.currentUserID,"Coronavirus", "10-03-2020 12:10", "2a", "Harvey Specter", 0)
+               dbHelper.insertAppointmentData(DatabaseHelper.currentUserID,"Coronavirus2", "10-03-2020 13:10", "3b", "Sam Winchester", 0)
                startActivity(Intent(this, HomeActivity::class.java))
            }
 
