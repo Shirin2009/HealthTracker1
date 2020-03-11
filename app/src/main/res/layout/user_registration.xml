@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background"
-    >
+    android:background="@drawable/homebackground1">
 
-
-    <ImageView
-        android:layout_marginTop="30dp"
-        android:layout_width="100dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:alpha=".9"
-        android:scaleType="centerInside"
-        android:src="@drawable/logo" />
+    <LinearLayout
+        android:id="@+id/ll_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="50dp"
+        android:orientation="vertical">
 
     <EditText
         android:id="@+id/full_name_registration"
@@ -23,23 +20,21 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"
-        android:background="@drawable/rounded_border"
-        android:gravity="center"
-        android:hint="full_name"
+        android:hint="Name"
         android:inputType="textPersonName"
         android:padding="10dp"
+        android:gravity="left"
         android:textColorHint="@android:color/white" />
 
     <EditText
         android:id="@+id/email_registration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="email"
+        android:hint="Email"
         android:inputType="textWebEmailAddress"
         android:padding="10dp"
         android:textColorHint="@android:color/white"
-        android:background="@drawable/rounded_border"
-        android:gravity="center"
+        android:gravity="left"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"/>
@@ -48,12 +43,11 @@
         android:id="@+id/password_registration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="password"
+        android:hint="Password"
         android:inputType="textWebPassword"
         android:padding="10dp"
         android:textColorHint="@android:color/white"
-        android:background="@drawable/rounded_border"
-        android:gravity="center"
+        android:gravity="left"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp" />
@@ -62,34 +56,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="25dp"
+    android:orientation="horizontal"
+    android:typeface="serif">
         <Button
             android:id="@+id/save_registration"
-            android:layout_width="171dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/rounded_button"
-            android:text="save"
+            android:text="Save"
             android:textAllCaps="false"
             android:textColor="#0D0E0D"
-            android:textSize="21sp" />
+            android:textSize="21sp"
+            android:typeface="serif"/>
 
         <Button
             android:id="@+id/cancel_registration"
-            android:layout_width="171dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/rounded_button"
-            android:text="cancel"
+            android:text="Cancel"
             android:textAllCaps="false"
             android:textColor="#0D0E0D"
-            android:textSize="21sp" />
-    </LinearLayout>
+            android:textSize="21sp"
+            android:typeface="serif"/>
 
-</LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

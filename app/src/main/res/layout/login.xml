@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentStart="true"
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true"
-    android:background="@drawable/login_background"
-    android:layout_marginTop="42dp"
+    android:background="@drawable/homebackground1"
     android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/iv_logo-login"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:alpha=".9"
-            android:scaleType="centerInside"
-            android:src="@drawable/logo" />
-
+        <LinearLayout
+            android:id="@+id/ll_main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="25dp"
+            android:orientation="vertical">
         <EditText
             android:id="@+id/login_email_txt_login"
             android:layout_width="match_parent"
@@ -25,8 +21,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp"
-            android:background="@drawable/rounded_border"
-            android:gravity="center"
+            android:gravity="left"
             android:hint="Email"
             android:inputType="textWebEmailAddress"
             android:padding="10dp"
@@ -39,34 +34,40 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp"
-            android:background="@drawable/rounded_border"
-            android:gravity="center"
-            android:hint="password"
+            android:gravity="left"
+            android:hint="Password"
             android:inputType="textWebPassword"
             android:padding="10dp"
             android:textColorHint="@android:color/white" />
 
-
-        <Button
-            android:id="@+id/login_btn_login"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/rounded_button"
+            android:gravity="center"
+            android:padding="25dp"
+            android:orientation="horizontal"
+            android:typeface="serif">
+        <Button
+            android:id="@+id/login_btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
             android:text="LogIn"
+            android:typeface="serif"
             android:textAllCaps="false"
             android:textColor="#0D0E0D"
             android:textSize="21sp" />
+         <Button
+             android:id="@+id/signup_txt_loin"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Sign Up"
+             android:textAllCaps="false"
+             android:textColor="#0D0E0D"
+             android:textSize="21sp"
+             android:typeface="serif"/>
 
-        <TextView
-            android:id="@+id/signup_txt_loin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Sign Up"
-            android:textColor="#0D0E0D"
-            android:textSize="21sp" />
-</LinearLayout>
+                </LinearLayout>
+
+        </LinearLayout>
+</RelativeLayout>
