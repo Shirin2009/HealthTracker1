@@ -26,6 +26,32 @@
         android:gravity="left"
         android:textColorHint="@android:color/white" />
 
+        <EditText
+            android:id="@+id/age_registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:hint="Age"
+            android:inputType="number"
+            android:padding="10dp"
+            android:gravity="left"
+            android:textColorHint="@android:color/white" />
+
+        <EditText
+            android:id="@+id/dr_name_registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:hint="Doctor Name (optional)"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:gravity="left"
+            android:textColorHint="@android:color/white" />
+
     <EditText
         android:id="@+id/email_registration"
         android:layout_width="match_parent"

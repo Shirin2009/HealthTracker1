@@ -9,9 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity:AppCompatActivity(), View.OnClickListener {
     //private val activity = this@LoginActivity
-    var btnLogin: Button? = null
-    var edtUsername: EditText? = null
-    var edtPassword: EditText? = null
     var dbHelper: DatabaseHelper? = null
     private lateinit var databaseHelper: DatabaseHelper
 

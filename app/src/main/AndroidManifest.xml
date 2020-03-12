@@ -30,10 +30,6 @@
         </activity>
 
         <activity android:name=".UserModel" />
-        <activity android:name=".RegisterActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".HomeActivity"/>
         <activity android:name=".Appointments"/>
         <activity android:name=".FitnessActivity"/>

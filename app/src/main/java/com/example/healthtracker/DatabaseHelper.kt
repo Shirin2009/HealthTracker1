@@ -11,6 +11,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
     //create User table SQL query
     private val CREATE_TABLE_USER = (" CREATE TABLE " + TABLE_USER + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME + " TEXT,"
+            + COLUMN_USER_AGE + "TEXT," + COLUMN_DR_NAME + "TEXT,"
             + COLUMN_EMAIL + " TEXT," + COLUMN_USER_PASSWORD + " TEXT" + ")")
 
     //create Sleep table SQL query
@@ -59,10 +60,12 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
     }
 
     //this method is for insert a data into database User table
-    fun insertUserData(name: String, email: String, password: String) {
+    fun insertUserData(name: String,age: String , drName: String,email: String,password: String) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(COLUMN_NAME, name)
+        contentValues.put(COLUMN_USER_AGE, age)
+        contentValues.put(COLUMN_DR_NAME,drName)
         contentValues.put(COLUMN_EMAIL, email)
         contentValues.put(COLUMN_USER_PASSWORD, password)
 
@@ -83,6 +86,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         db.insert(TABLE_SLEEP, null, contentValues)
         db.close()
     }
+
 
     //this method is for insert a data into database Appointment table
     fun insertAppointmentData(userID: Int, description: String, dateTime: String, room: String, doctorName: String, selected: Int) {
@@ -161,6 +165,8 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         values.put(COLUMN_NAME, users.fullName)
         values.put(COLUMN_EMAIL, users.email)
         values.put(COLUMN_USER_PASSWORD, users.password)
+        values.put(COLUMN_USER_AGE,users.age)
+        values.put(COLUMN_DR_NAME,users.drName)
 
         // updating row
         db.update(TABLE_USER, values, "$COLUMN_ID =?", arrayOf(users.id))
@@ -176,22 +182,30 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
     companion object {
         //database version
         const val DATABASE_VERSION = 1
+
         //database name
         const val DATABASE_NAME = "user.db"
+
         //table names
         const val TABLE_USER = "users"
         const val TABLE_SLEEP = "sleep"
         const val TABLE_APPOINTMENT = "appointment"
+
         //ID column @primary key
         const val COLUMN_ID = "id"
+
         //column names for user details
         const val COLUMN_NAME = "name"
         const val COLUMN_EMAIL = "email"
         const val COLUMN_USER_PASSWORD = "password"
+        const val COLUMN_USER_AGE = "age"
+        const val COLUMN_DR_NAME = "drName"
+
         //column names for sleep details
         const val COLUMN_USER_ID = "userId"
         const val COLUMN_HOURS_SLEPT = "hoursSlept"
         const val COLUMN_DATE = "date"
+
         //column names for appointment details
         const val COLUMN_DESCRIPTION = "description"
         const val COLUMN_DATE_TIME = "dateTime"

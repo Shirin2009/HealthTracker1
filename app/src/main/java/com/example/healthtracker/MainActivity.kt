@@ -17,25 +17,28 @@ class MainActivity : AppCompatActivity() {
 
         dbHelper= DatabaseHelper(this)
         showHome()
+
         login_btn_main.setOnClickListener {
             showLogin()
         }
 
         signup_txt_loin.setOnClickListener{
             showRegistration()
-
         }
 
         signup_btn_main.setOnClickListener{
             showRegistration()
-
         }
 
+        //this function saves the new user
         save_registration.setOnClickListener{
             val email= email_registration.text.toString().trim()
             val password = password_registration.text.toString().trim()
-            val name:String=full_name_registration.text.toString().trim()
+            val name  = full_name_registration.text.toString().trim()
+            val drName = dr_name_registration.text.toString()
+            val age = age_registration.text.toString()
 
+            //warn the user for the required information if they don't put any
             when {
                 email.isEmpty() -> {
                     login_email_txt_login.error="Email required"
@@ -48,24 +51,40 @@ class MainActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
                 name.isEmpty() -> {
-                    password_txt_login.error="Name required"
-                    password_txt_login.requestFocus()
+                    full_name_registration.error="Name required"
+                    full_name_registration.requestFocus()
                     return@setOnClickListener
                 }
+                age.isEmpty()->{
+                    age_registration.error="Age required"
+                    age_registration.requestFocus()
+                    return@setOnClickListener
+                }
+                drName.isEmpty()->{
+                    dr_name_registration.error="DR name required"
+                    dr_name_registration.requestFocus()
+                    return@setOnClickListener
+                }
+
+                //calls a method from database to check if user already has been registered
                 dbHelper.userExists(email,password) -> {
                     login_email_txt_login.error="This email is already being used"
                     login_email_txt_login.requestFocus()
                     return@setOnClickListener
                 }
+                //if its a new user it creates an account by inserting user's details
                 else -> {
-                    dbHelper.insertUserData(full_name_registration.text.toString(),email_registration.text.toString(),password_registration.text.toString())
+                    dbHelper.insertUserData(full_name_registration.text.toString(),
+                        age_registration.text.toString(),
+                        dr_name_registration.text.toString(),
+                        email_registration.text.toString(),
+                        password_registration.text.toString())
                 }
             }
-
             showHome()
-
         }
 
+        //when user cancels the registration it goes back to the login home page
         cancel_registration.setOnClickListener{
             showHome()
         }
