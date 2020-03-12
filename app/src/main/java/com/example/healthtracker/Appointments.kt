@@ -72,7 +72,7 @@ class Appointments : AppCompatActivity() {
 
         //submit appointment
         btnSubmit.setOnClickListener{
-            dateText.text=SimpleDateFormat("DD/mm/yyyy",Locale.UK).format(cal.getTime())
+            dateText.text=SimpleDateFormat("MM/dd/yyyy",Locale.UK).format(cal.getTime())
             timeText.text = SimpleDateFormat("HH:mm").format(cal.time)
         }
 
