@@ -11,7 +11,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
     //create User table SQL query
     private val CREATE_TABLE_USER = (" CREATE TABLE " + TABLE_USER + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME + " TEXT,"
-            + COLUMN_USER_AGE + "TEXT," + COLUMN_DR_NAME + "TEXT,"
+            + COLUMN_USER_AGE + " TEXT," + COLUMN_DR_NAME + " TEXT,"
             + COLUMN_EMAIL + " TEXT," + COLUMN_USER_PASSWORD + " TEXT" + ")")
 
     //create Sleep table SQL query
@@ -60,7 +60,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
     }
 
     //this method is for insert a data into database User table
-    fun insertUserData(name: String,age: String , drName: String,email: String,password: String) {
+    fun insertUserData(name: String, age: String , drName: String ,email: String, password: String) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(COLUMN_NAME, name)
@@ -163,10 +163,11 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
 
         val values = ContentValues()
         values.put(COLUMN_NAME, users.fullName)
-        values.put(COLUMN_EMAIL, users.email)
-        values.put(COLUMN_USER_PASSWORD, users.password)
         values.put(COLUMN_USER_AGE,users.age)
         values.put(COLUMN_DR_NAME,users.drName)
+        values.put(COLUMN_EMAIL, users.email)
+        values.put(COLUMN_USER_PASSWORD, users.password)
+
 
         // updating row
         db.update(TABLE_USER, values, "$COLUMN_ID =?", arrayOf(users.id))

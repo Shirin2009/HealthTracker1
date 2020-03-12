@@ -46,7 +46,7 @@
             android:id="@+id/pick_appoint_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Urgent Appointments" />
+            android:text="Urgent Appointments for this week" />
 
         <Spinner
             android:id="@+id/sp_option"
