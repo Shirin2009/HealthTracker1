@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.home.*
@@ -25,7 +24,7 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, SleepActivity::class.java))
         }
         img_appointment.setOnClickListener {
-            startActivity(Intent(this, Appointments::class.java))
+            startActivity(Intent(this, AppointmentsActivity::class.java))
         }
         img_fitness.setOnClickListener {
             startActivity(Intent(this, FitnessActivity::class.java))

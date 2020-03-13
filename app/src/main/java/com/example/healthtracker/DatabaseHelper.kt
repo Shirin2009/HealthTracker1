@@ -27,7 +27,8 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_USER_ID + " INTEGER,"
             + COLUMN_DESCRIPTION + " TEXT,"
-            + COLUMN_DATE_TIME + " TEXT,"
+            + COLUMN_DATE + " TEXT,"
+            + COLUMN_TIME + " TEXT,"
             + COLUMN_ROOM + " TEXT,"
             + COLUMN_DOCTOR_NAME + " TEXT,"
             + COLUMN_SELECTED + " INTEGER,"
@@ -87,14 +88,14 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         db.close()
     }
 
-
     //this method is for insert a data into database Appointment table
-    fun insertAppointmentData(userID: Int, description: String, dateTime: String, room: String, doctorName: String, selected: Int) {
+    fun insertAppointmentData(userID: Int, description: String, date: String, time: String, room: String, doctorName: String, selected: Int) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(COLUMN_USER_ID, userID)
         contentValues.put(COLUMN_DESCRIPTION, description)
-        contentValues.put(COLUMN_DATE_TIME, dateTime)
+        contentValues.put(COLUMN_DATE, date)
+        contentValues.put(COLUMN_TIME, time)
         contentValues.put(COLUMN_ROOM, room)
         contentValues.put(COLUMN_DOCTOR_NAME, doctorName)
         contentValues.put(COLUMN_SELECTED, selected)
@@ -102,6 +103,64 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         //inserting row into database
         db.insert(TABLE_APPOINTMENT, null, contentValues)
         db.close()
+    }
+
+    //get appointments from database
+    fun getAppointments(userID: Int,selected: Int):MutableList<Appointment>? {
+
+        val db=writableDatabase
+        val query= "select * from appointment where userId = '$userID' and selected = '$selected' "
+        val cursor = db.rawQuery(query,null)
+        var appointments: MutableList<Appointment>? = null
+
+        if(cursor != null) {
+            var id:Int
+            var userID:Int
+            var description:String
+            var date:String
+            var time:String
+            var room:String
+            var doctorName:String
+            var selected:Int
+            var appointment:Appointment
+
+            for (i in 1..cursor.count) {
+                if (i==1) {
+                    cursor.moveToFirst()
+                    id = (cursor.getString(cursor.getColumnIndex(COLUMN_ID))).toInt()
+                    userID = (cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))).toInt()
+                    description = (cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)))
+                    date = (cursor.getString(cursor.getColumnIndex(COLUMN_DATE)))
+                    time = (cursor.getString(cursor.getColumnIndex(COLUMN_TIME)))
+                    room = (cursor.getString(cursor.getColumnIndex(COLUMN_ROOM)))
+                    doctorName = (cursor.getString(cursor.getColumnIndex(COLUMN_DOCTOR_NAME)))
+                    selected = (cursor.getString(cursor.getColumnIndex(COLUMN_SELECTED))).toInt()
+                    appointment = Appointment(id,userID,description,date,time,room,doctorName,selected)
+                    appointments = mutableListOf(appointment)
+                } else {
+                    cursor.moveToNext()
+                    id = (cursor.getString(cursor.getColumnIndex(COLUMN_ID))).toInt()
+                    userID = (cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))).toInt()
+                    description = (cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)))
+                    date = (cursor.getString(cursor.getColumnIndex(COLUMN_DATE)))
+                    time = (cursor.getString(cursor.getColumnIndex(COLUMN_TIME)))
+                    room = (cursor.getString(cursor.getColumnIndex(COLUMN_ROOM)))
+                    doctorName = (cursor.getString(cursor.getColumnIndex(COLUMN_DOCTOR_NAME)))
+                    selected = (cursor.getString(cursor.getColumnIndex(COLUMN_SELECTED))).toInt()
+                    appointment = Appointment(id,userID,description,date,time,room,doctorName,selected)
+                    appointments?.add(appointment)
+                }
+            }
+        }
+        cursor.close()
+        return appointments
+    }
+
+    //update appointments table
+    fun updateAppointment(userID: Int, appointmentID:Int) {
+        val db=writableDatabase
+        db.execSQL("UPDATE appointment SET selected = 1 , userId = $userID WHERE selected = 0 AND id = $appointmentID;")
+
     }
 
     //check if user with given email and password exists
@@ -209,7 +268,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
 
         //column names for appointment details
         const val COLUMN_DESCRIPTION = "description"
-        const val COLUMN_DATE_TIME = "dateTime"
+        const val COLUMN_TIME = "time"
         const val COLUMN_ROOM = "room"
         const val COLUMN_DOCTOR_NAME = "doctorName"
         const val COLUMN_SELECTED = "selected"

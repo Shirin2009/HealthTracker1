@@ -7,14 +7,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewParent
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.appointments.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Appointments : AppCompatActivity() {
+
+class AppointmentsActivity : AppCompatActivity() {
 
     var databaseHelper: DatabaseHelper? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,11 +23,15 @@ class Appointments : AppCompatActivity() {
         //calling database
         databaseHelper = DatabaseHelper(this)
 
+        var appointments = databaseHelper!!.getAppointments(0,0)
+
         //book from available appointments
-        val slots = arrayOf("", "Mon 9:30","Mon 9:45","Mon 10:30","Mon 11:45",
-            "Tue 13:00", "Tue 13:20","Tue 15:00",
-            "Tue 16:10", "Wed 12:00","Thu 9:00",
-            "Thu 12:00","Thu 13:00", "Fri 10:15")
+        val slots = mutableListOf("")
+        if (appointments != null) {
+            for (i in 0 until appointments.count()) {
+                slots.add(appointments[i].date + " " + appointments[i].time)
+            }
+        }
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, slots)
 
         //attached arrayAdapter to spinner
@@ -36,17 +40,16 @@ class Appointments : AppCompatActivity() {
         sp_option.onItemSelectedListener = object:
         AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
+                next_appoint_txt.text = slots[0]
             }
 
-            override fun onItemSelected(
-                p0: AdapterView<*>?,
-                p1: View?,
-                p2: Int,
-                p3: Long
-            ) {
-                next_appoint_txt.text = slots[p2]
-            }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (p2 != 0) {
+                    next_appoint_txt.text = slots[p2]
+                    databaseHelper!!.updateAppointment(DatabaseHelper.currentUserID, appointments!![p2-1].id)
+                }
 
+            }
         }
 
         //calender
@@ -57,29 +60,32 @@ class Appointments : AppCompatActivity() {
         val timeText = findViewById<TextView>(R.id.time_txt)
 
         //function to pick date
-        pickdate.setOnClickListener(View.OnClickListener {
-            val date = object:DatePickerDialog.OnDateSetListener{
-                override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        pickdate.setOnClickListener {
+            val date = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                     cal.set(Calendar.YEAR,year)
                     cal.set(Calendar.MONTH,month)
                     cal.set(Calendar.DAY_OF_MONTH,dayOfMonth)
-                  // dateText.text=SimpleDateFormat("MM/dd/yyyy",Locale.UK).format(cal.getTime())
+                    // dateText.text=SimpleDateFormat("MM/dd/yyyy",Locale.UK).format(cal.getTime())
                 }
-
-            }
             DatePickerDialog(this,date,cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH)).show()
-        })
+        }
+
+        val description = findViewById<View>(R.id.describe_multiline) as EditText
 
         //submit appointment
         btnSubmit.setOnClickListener{
-            dateText.text=SimpleDateFormat("MM/dd/yyyy",Locale.UK).format(cal.getTime())
-            timeText.text = SimpleDateFormat("HH:mm").format(cal.time)
+            val date = SimpleDateFormat("MM/dd/yyyy",Locale.UK).format(cal.time)
+            val time = SimpleDateFormat("HH:mm").format(cal.time)
+            dateText.text = date
+            timeText.text = time
+
+            databaseHelper!!.insertAppointmentData(DatabaseHelper.currentUserID,description.text.toString().trim(),date,time,"?","?",1)
         }
 
         //function to pick time
         pickTime.setOnClickListener{
            // val cal = Calendar.getInstance()
-            val timeSetListener = TimePickerDialog.OnTimeSetListener{timePicker: TimePicker?, hour: Int, minute: Int ->
+            val timeSetListener = TimePickerDialog.OnTimeSetListener{ _, hour: Int, minute: Int ->
                 cal.set(Calendar.HOUR_OF_DAY,hour)
                 cal.set(Calendar.MINUTE,minute)
                // timeText.text = SimpleDateFormat("HH:mm").format(cal.time)
@@ -97,7 +103,7 @@ class Appointments : AppCompatActivity() {
     //function for changing the application background
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here.
-        val id = item.getItemId()
+        val id = item.itemId
 
         if (id == R.id.yellow) {
             //yellow
