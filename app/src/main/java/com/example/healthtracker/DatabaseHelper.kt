@@ -11,7 +11,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
     //create User table SQL query
     private val CREATE_TABLE_USER = (" CREATE TABLE " + TABLE_USER + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME + " TEXT,"
-            + COLUMN_USER_AGE + " TEXT," + COLUMN_DR_NAME + " TEXT,"
+            + COLUMN_USER_AGE + " INTEGER," + COLUMN_DR_NAME + " TEXT,"
             + COLUMN_EMAIL + " TEXT," + COLUMN_USER_PASSWORD + " TEXT" + ")")
 
     //create Sleep table SQL query

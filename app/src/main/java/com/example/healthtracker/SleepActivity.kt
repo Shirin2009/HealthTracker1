@@ -19,6 +19,7 @@ class SleepActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sleep)
+
         val dbHelper = DatabaseHelper(this)
         val save = findViewById<View>(R.id.button) as Button
         val inputHours = findViewById<View>(R.id.editText) as EditText
