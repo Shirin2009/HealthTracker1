@@ -11,15 +11,33 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
     //create User table SQL query
     private val CREATE_TABLE_USER = (" CREATE TABLE " + TABLE_USER + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME + " TEXT,"
-            + COLUMN_USER_AGE + " INTEGER," + COLUMN_DR_NAME + " TEXT,"
+            + COLUMN_USER_AGE + " TEXT," + COLUMN_DR_NAME + " TEXT,"
             + COLUMN_EMAIL + " TEXT," + COLUMN_USER_PASSWORD + " TEXT" + ")")
 
     //create Sleep table SQL query
     private val CREATE_TABLE_SLEEP = (" CREATE TABLE " + TABLE_SLEEP + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_USER_ID + " INTEGER,"
-            + COLUMN_HOURS_SLEPT + " INTEGER,"
-            + COLUMN_DATE + " TEXT,"
+            + HOURS_SLEPT + " INTEGER,"
+            + DATE + " TEXT,"
+            + " FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID +"))")
+
+    //create Fitness table SQL query
+    private val CREATE_TABLE_FITNESS = (" CREATE TABLE " + TABLE_FITNESS + "("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_USER_ID + " INTEGER,"
+            + CALORIES_BURNED + " INTEGER,"
+            + DATE_TIME + " TEXT,"
+            + ACTIVITY_TYPE + " TEXT,"
+            + " FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID +"))")
+
+    //create Food table SQL query
+    private val CREATE_TABLE_FOOD = (" CREATE TABLE " + TABLE_FOOD + "("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_USER_ID + " INTEGER,"
+            + CALORIES_GAINED + " INTEGER,"
+            + DATE_TIME + " TEXT,"
+            + FOOD_TYPE + " TEXT,"
             + " FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID +"))")
 
     //create Appointment table SQL query
@@ -34,19 +52,29 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
             + COLUMN_SELECTED + " INTEGER,"
             + " FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID +"))")
 
+
     //drop User table sql query
     private val DROP_USER_TABLE = " DROP TABLE IF EXISTS $TABLE_USER"
 
     //drop Sleep table sql query
     private val DROP_SLEEP_TABLE = " DROP TABLE IF EXISTS $TABLE_SLEEP"
 
+    //drop Fitness table sql query
+    private val DROP_FITNESS_TABLE = " DROP TABLE IF EXISTS $TABLE_FITNESS"
+
+    //drop Food table sql query
+    private val DROP_FOOD_TABLE = " DROP TABLE IF EXISTS $TABLE_FOOD"
+
     //drop Appointment table sql query
     private val DROP_APPOINTMENT_TABLE = " DROP TABLE IF EXISTS $TABLE_APPOINTMENT"
+
 
     //this function is called once ( the first time of the execution), it creates the database tables using SQL query
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_TABLE_USER)
         db.execSQL(CREATE_TABLE_SLEEP)
+        db.execSQL(CREATE_TABLE_FITNESS)
+        db.execSQL(CREATE_TABLE_FOOD)
         db.execSQL(CREATE_TABLE_APPOINTMENT)
     }
 
@@ -55,6 +83,8 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         //drop table if already exist
         db.execSQL(DROP_USER_TABLE)
         db.execSQL(DROP_SLEEP_TABLE)
+        db.execSQL(DROP_FITNESS_TABLE)
+        db.execSQL(DROP_FOOD_TABLE)
         db.execSQL(DROP_APPOINTMENT_TABLE)
         //create table again
         onCreate(db)
@@ -75,18 +105,168 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         db.close()
     }
 
+
     //this method is for insert a data into database Sleep table
     fun insertSleepData(userID: Int, hoursSlept: Int, date: String) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(COLUMN_USER_ID, userID)
-        contentValues.put(COLUMN_HOURS_SLEPT, hoursSlept)
-        contentValues.put(COLUMN_DATE, date)
+        contentValues.put(HOURS_SLEPT, hoursSlept)
+        contentValues.put(DATE, date)
 
         //inserting row into database
         db.insert(TABLE_SLEEP, null, contentValues)
         db.close()
     }
+
+
+    fun showSleepData(userID: Int, date: String):Int{
+        val db=writableDatabase
+        val query= "select * from sleep where dateTime = '$date' and userId = '$userID'"
+        val cursor = db.rawQuery(query,null)
+        var hourSlept = 0
+        if(cursor.moveToFirst()){
+            do{
+                hourSlept += cursor.getInt(cursor.getColumnIndex(HOURS_SLEPT))
+            }while(cursor.moveToNext())
+        }
+        else{
+            hourSlept = -1
+        }
+
+        cursor.close()
+
+        return hourSlept
+    }
+
+    fun checkSleepData(dateTime: String):Boolean{
+        val db=writableDatabase
+        val query= "select * from sleep where dateTime = '$dateTime'"
+        val cursor = db.rawQuery(query,null)
+        if(cursor.count <= 0){
+            cursor.close()
+            return false
+        }
+
+        return true
+    }
+
+    //this method is for insert a data into database Fitness table
+    fun insertFitnessData(userID: Int, caloriesBurned: Int, dateTime: String, activityType: String) {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_USER_ID, userID)
+        contentValues.put(CALORIES_BURNED, caloriesBurned)
+        contentValues.put(DATE_TIME, dateTime)
+        contentValues.put(ACTIVITY_TYPE, activityType)
+
+        //inserting row into database
+        db.insert(TABLE_FITNESS, null, contentValues)
+        db.close()
+    }
+
+    fun showFitnessData(userID: Int, dateTime: String, activityType: String):Int{
+        val db=writableDatabase
+        val query= "select * from fitness where dateTime = '$dateTime' and userId = '$userID' and activityType = '$activityType'"
+        val cursor = db.rawQuery(query,null)
+        var calsBurned = 0
+        if(cursor.moveToFirst()){
+            do{
+                calsBurned += cursor.getInt(cursor.getColumnIndex(CALORIES_BURNED))
+            }while(cursor.moveToNext())
+        }
+        else{
+            calsBurned = -1
+        }
+        cursor.close()
+
+        return calsBurned
+    }
+
+
+    //this method is for insert a data into database Food table
+    fun insertFoodData(userID: Int, caloriesGained: Int, dateTime: String, foodType: String) {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_USER_ID, userID)
+        contentValues.put(CALORIES_GAINED, caloriesGained)
+        contentValues.put(DATE_TIME, dateTime)
+        contentValues.put(FOOD_TYPE, foodType)
+
+        //inserting row into database
+        db.insert(TABLE_FOOD, null, contentValues)
+        db.close()
+    }
+
+    fun showFoodData(userID: Int, dateTime: String, foodType: String):Int{
+        val db=writableDatabase
+        val query= "select * from food where dateTime = '$dateTime' and userId = '$userID' and foodType = '$foodType'"
+        val cursor = db.rawQuery(query,null)
+        var calsGained = 0
+        if(cursor.moveToFirst()){
+            do{
+                calsGained += cursor.getInt(cursor.getColumnIndex(CALORIES_GAINED))
+            }while(cursor.moveToNext())
+        }
+        else{
+            calsGained = -1
+        }
+        cursor.close()
+
+        return calsGained
+    }
+
+
+    //check if user with given email and password exists
+    fun userExists(email: String, password: String):Boolean {
+        val db=writableDatabase
+        val query= "select * from users where email = '$email' and password = '$password' "
+        val cursor = db.rawQuery(query,null)
+        if(cursor.count <= 0){
+            cursor.close()
+            return false
+        }
+        cursor.moveToFirst()
+        currentUserID = (cursor.getString(cursor.getColumnIndex(COLUMN_ID))).toInt()
+        cursor.close()
+        return true
+    }
+
+    //check if hours slept for specified user this day exists
+    fun hoursSleptExists(userID: Int, date: String):Boolean {
+        val db=writableDatabase
+        val query= "select * from sleep where userId = '$userID' and date = '$date' "
+        val cursor = db.rawQuery(query,null)
+        if(cursor.count <= 0){
+            cursor.close()
+            return false
+        }
+        cursor.close()
+        return true
+    }
+
+    //updating user record
+    fun updateUser(users: UserModel) {
+        val db = this.writableDatabase
+
+        val values = ContentValues()
+        values.put(COLUMN_NAME, users.fullName)
+        values.put(COLUMN_USER_AGE,users.age)
+        values.put(COLUMN_DR_NAME,users.drName)
+        values.put(COLUMN_EMAIL, users.email)
+        values.put(COLUMN_USER_PASSWORD, users.password)
+
+        // updating row
+        db.update(TABLE_USER, values, "$COLUMN_ID =?", arrayOf(users.id))
+        db.close()
+    }
+
+    fun deleteUserData(users:UserModel){
+        val db = this.writableDatabase
+        db.delete(TABLE_USER, "COLUMN_ID=?", arrayOf(users.id))
+        db.close()
+    }
+
 
     //this method is for insert a data into database Appointment table
     fun insertAppointmentData(userID: Int, description: String, date: String, time: String, room: String, doctorName: String, selected: Int) {
@@ -163,82 +343,6 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
 
     }
 
-    //check if user with given email and password exists
-    fun userExists(email: String, password: String):Boolean {
-        val db=writableDatabase
-        val query= "select * from users where email = '$email' and password = '$password' "
-        val cursor = db.rawQuery(query,null)
-        if(cursor.count <= 0){
-            cursor.close()
-            return false
-        }
-        cursor.moveToFirst()
-        currentUserID = (cursor.getString(cursor.getColumnIndex(COLUMN_ID))).toInt()
-        cursor.close()
-        return true
-    }
-
-    //check if hours slept for specified user this day exists
-    fun hoursSleptExists(userID: Int, date: String):Boolean {
-        val db=writableDatabase
-        val query= "select * from sleep where userId = '$userID' and date = '$date' "
-        val cursor = db.rawQuery(query,null)
-        if(cursor.count <= 0){
-            cursor.close()
-            return false
-        }
-        cursor.close()
-        return true
-    }
-
-    fun isUserExists(email: String, password: String): Boolean {
-        val db = this.readableDatabase
-
-        // array of columns to fetch
-        val columns = arrayOf(COLUMN_ID)
-
-        //selection criteria
-        val selection = "$COLUMN_EMAIL=?"
-
-        //selection arguments
-        val selectionArgs = arrayOf(email,password)
-
-        //check if the user exist (query function fetches records from user table in our database)
-        val cursor = db.query(TABLE_USER, columns, selection, selectionArgs, null, null, null)
-
-        val cursorCount = cursor.count
-        cursor.close()
-        db.close()
-
-        if(cursorCount>0){
-            return true
-        }
-        return false
-    }
-
-    //updating user record
-    fun updateUser(users: UserModel) {
-        val db = this.writableDatabase
-
-        val values = ContentValues()
-        values.put(COLUMN_NAME, users.fullName)
-        values.put(COLUMN_USER_AGE,users.age)
-        values.put(COLUMN_DR_NAME,users.drName)
-        values.put(COLUMN_EMAIL, users.email)
-        values.put(COLUMN_USER_PASSWORD, users.password)
-
-
-        // updating row
-        db.update(TABLE_USER, values, "$COLUMN_ID =?", arrayOf(users.id))
-        db.close()
-    }
-
-    fun deleteUserData(users:UserModel){
-        val db = this.writableDatabase
-        db.delete(TABLE_USER, "COLUMN_ID=?", arrayOf(users.id))
-        db.close()
-    }
-
     companion object {
         //database version
         const val DATABASE_VERSION = 1
@@ -249,6 +353,8 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         //table names
         const val TABLE_USER = "users"
         const val TABLE_SLEEP = "sleep"
+        const val TABLE_FITNESS = "fitness"
+        const val TABLE_FOOD = "food"
         const val TABLE_APPOINTMENT = "appointment"
 
         //ID column @primary key
@@ -263,8 +369,17 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
 
         //column names for sleep details
         const val COLUMN_USER_ID = "userId"
-        const val COLUMN_HOURS_SLEPT = "hoursSlept"
-        const val COLUMN_DATE = "date"
+        const val HOURS_SLEPT = "hoursSlept"
+        const val DATE = "date"
+
+        //column names for fitness details
+        const val CALORIES_BURNED = "caloriesBurned"
+        const val DATE_TIME = "dateTime"
+        const val ACTIVITY_TYPE = "activityType"
+
+        //column names for food details
+        const val CALORIES_GAINED = "caloriesGained"
+        const val FOOD_TYPE = "foodType"
 
         //column names for appointment details
         const val COLUMN_DESCRIPTION = "description"
@@ -272,6 +387,8 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         const val COLUMN_ROOM = "room"
         const val COLUMN_DOCTOR_NAME = "doctorName"
         const val COLUMN_SELECTED = "selected"
+        const val COLUMN_DATE ="date"
+
 
         var currentUserID:Int = 0
     }

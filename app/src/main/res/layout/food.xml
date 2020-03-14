@@ -3,12 +3,63 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="match_parent"
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/food_logo" />
+        android:id="@+id/foodGoal"
+        android:text="Set your daily calorie goal"/>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:id="@+id/foodPieChart"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/calsCons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Calories consumed"
+            android:inputType="number"
+            android:background="@null"
+            android:paddingTop="13dp"/>
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="0dp"/>
+
+        <Button
+            android:id="@+id/dateBtnFood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter date"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
+
+    <NumberPicker
+        android:id="@+id/mealTypePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Done"
+        android:id="@+id/doneBtnFood"/>
 </LinearLayout>
