@@ -104,17 +104,33 @@
         tools:ignore="MissingConstraints" />
 
     <Button
+        android:id="@+id/step_counter_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="Step Counter"
+        android:textAllCaps="false"
+        android:textColor="#0D0E0D"
+        android:textSize="21sp"
+        android:typeface="serif"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/logout_btn_home"
+        app:layout_constraintHorizontal_bias="0.439"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/logout_btn_home"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/rounded_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="40dp"
         android:text="LogOut"
         android:textAllCaps="false"
         android:textColor="#0D0E0D"
+        android:textSize="21sp"
+        android:typeface="serif"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

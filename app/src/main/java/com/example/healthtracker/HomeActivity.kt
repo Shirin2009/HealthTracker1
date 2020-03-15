@@ -20,6 +20,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home)
 
+
+
         img_sleep.setOnClickListener {
             startActivity(Intent(this, SleepActivity::class.java))
         }
@@ -32,6 +34,12 @@ class HomeActivity : AppCompatActivity() {
         img_food.setOnClickListener {
             startActivity(Intent(this, FoodActivity::class.java))
         }
+
+        //button to link the home page to the stepCounter activity
+        step_counter_btn.setOnClickListener{
+            startActivity(Intent(this, TimerActivity::class.java))
+        }
+
         logout = findViewById<View>(R.id.logout_btn_home) as Button
         val intent = intent
 
@@ -41,6 +49,8 @@ class HomeActivity : AppCompatActivity() {
             finish()
             Toast.makeText(this, "Log Out Successful", Toast.LENGTH_LONG).show()
         }
+
+
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

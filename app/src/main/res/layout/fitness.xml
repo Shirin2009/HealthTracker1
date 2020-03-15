@@ -10,7 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/fitGoal"
-        android:text="Set your daily calorie goal"/>
+        android:text="Set your daily calorie goal"
+        android:autoSizeTextType="uniform"/>
 
     <com.github.mikephil.charting.charts.PieChart
         android:layout_width="350dp"
