@@ -9,10 +9,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:typeface="serif"
     android:padding="30dp">
 
     <TextView
         android:id="@+id/your_appoint_txt"
+        android:typeface="serif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Appointments"
@@ -22,71 +24,91 @@
 
 
 </LinearLayout>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="168dp"
-        android:layout_height="177dp"
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="206dp"
-        android:layout_marginLeft="206dp"
-        android:layout_marginTop="316dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginRight="26dp"
-        android:layout_marginBottom="33dp"
-        android:gravity="left"
-        android:orientation="vertical">
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="-1dp"
+        android:typeface="serif">
 
-
-        <TextView
-            android:id="@+id/pick_appoint_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Urgent Appointments for this week" />
-
-        <Spinner
-            android:id="@+id/sp_option"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp" />
-
-        <TextView
-            android:id="@+id/next_appoint1_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Urgent Appointment" />
-
-        <TextView
-            android:id="@+id/next_appoint_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/upcoming_appoint_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Upcoming Appointment" />
-        <TextView
-            android:id="@+id/date_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="168dp"
+            android:layout_height="177dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true" />
-        <TextView
-            android:id="@+id/time_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="206dp"
+            android:layout_marginLeft="206dp"
+            android:layout_marginTop="316dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginBottom="33dp"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:typeface="serif">
 
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/pick_appoint_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Urgent Appointments for this week" />
+
+            <Spinner
+                android:id="@+id/sp_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp" />
+
+            <TextView
+                android:id="@+id/next_appoint1_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/urgent_appointment"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/next_appoint_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/upcoming_appoint_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Upcoming Appointment"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/date_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/time_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:typeface="serif" />
+
+
+        </LinearLayout>
     </ScrollView>
+
     <LinearLayout
         android:layout_width="168dp"
         android:layout_height="177dp"
@@ -100,12 +122,14 @@
         android:layout_marginRight="224dp"
         android:layout_marginBottom="32dp"
         android:gravity="left"
+        android:typeface="serif"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/book_appoint_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:typeface="serif"
             android:text="Book Appointment"
             android:textSize="14dp" />
 
@@ -117,11 +141,13 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:typeface="serif"
             android:text="Pick Date" />
 
 
         <Button
             android:id="@+id/pick_time_btn"
+            android:typeface="serif"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pick Time" />
@@ -130,6 +156,7 @@
         <TextView
             android:id="@+id/description_txt"
             android:layout_width="wrap_content"
+            android:typeface="serif"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
@@ -142,6 +169,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:typeface="serif"
             android:gravity="start|top"
             android:hint="Tell us about your problem.."
             android:inputType="textMultiLine"
@@ -153,14 +181,22 @@
             android:id="@+id/btnSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:typeface="serif"
             android:text="Submit" />
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:typeface="serif"
+            android:layout_height="wrap_content"
+            android:text="Save" />
+
 
     </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="194dp"
-        android:layout_height="180dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="106dp"

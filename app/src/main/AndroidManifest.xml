@@ -38,5 +38,6 @@
         <activity android:name=".FoodActivity"/>
         <activity android:name=".SleepActivity"/>
         <activity android:name=".TimerActivity"/>
+        <activity android:name=".NotificationActivity"/>
     </application>
 </manifest>

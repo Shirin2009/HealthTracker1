@@ -13,5 +13,6 @@
     <string name="appointments">Appointments</string>
     <string name="fitness">Fitness</string>
     <string name="enter_hours_slept">Enter hours slept:</string>
+    <string name="urgent_appointment">Urgent Appointment</string>
 
 </resources>

@@ -2,6 +2,7 @@ package com.example.healthtracker
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -92,7 +93,9 @@ class AppointmentsActivity : AppCompatActivity() {
             }
         TimePickerDialog(this,timeSetListener,cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true).show()
         }
-
+        btnSave.setOnClickListener{
+            startActivity(Intent(this, NotificationActivity::class.java))
+        }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
