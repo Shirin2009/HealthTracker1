@@ -12,6 +12,8 @@ import android.widget.RemoteViews
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.appointments.*
 import kotlinx.android.synthetic.main.notification.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NotificationActivity: AppCompatActivity() {
 
@@ -25,6 +27,7 @@ class NotificationActivity: AppCompatActivity() {
     private val channelID = "com.example.healthtracker"
     private val description = "Your appointment booked."
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.notification)
@@ -34,7 +37,7 @@ class NotificationActivity: AppCompatActivity() {
 
         btnNotify.setOnClickListener{
 
-           // val intent = Intent(this,AppointmentsActivity::class.java)
+            //val intent = Intent(this,NotificationActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
             val contentView = RemoteViews(packageName,R.layout.notification_layout)
             contentView.setTextViewText(R.id.tv_title, "Health Tracker")
