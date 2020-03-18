@@ -22,6 +22,6 @@
     <string name="logout">LogOut</string>
     <string name="sleep">Sleep</string>
     <string name="cardiovascular">Cardiovascular</string>
-    <string name="step_counter">Step Counter</string>
+    <string name="sync_device">Sync Device</string>
 
 </resources>
