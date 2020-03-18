@@ -17,11 +17,11 @@
         android:id="@+id/blue"
         android:title="Blue"/>
     <item
-        android:id="@+id/red"
-        android:title="Red"/>
+        android:id="@+id/lightGreen"
+        android:title="Light Green"/>
     <item
-        android:id="@+id/limeGreen"
-        android:title="Lime Green"/>
+        android:id="@+id/pink"
+        android:title="Pink"/>
     <item
         android:id="@+id/lightBlue"
         android:title="Light Blue"/>

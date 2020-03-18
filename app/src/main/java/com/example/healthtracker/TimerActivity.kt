@@ -28,7 +28,7 @@ class TimerActivity : AppCompatActivity() {
             println("You reached your daily goal!")
             tv.text = "You reached your daily goal!"
         }
-
+        //countdown duration
         override fun onTick(millisUntilFinished: Long) {
             tv.textSize = 30f
 

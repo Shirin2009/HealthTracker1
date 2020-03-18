@@ -37,7 +37,6 @@ class NotificationActivity: AppCompatActivity() {
 
         btnNotify.setOnClickListener{
 
-            //val intent = Intent(this,NotificationActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
             val contentView = RemoteViews(packageName,R.layout.notification_layout)
             contentView.setTextViewText(R.id.tv_title, "Health Tracker")

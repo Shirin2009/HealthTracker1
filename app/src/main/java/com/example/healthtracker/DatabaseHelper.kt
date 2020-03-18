@@ -2,6 +2,7 @@ package com.example.healthtracker
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
@@ -118,7 +119,10 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         db.insert(TABLE_SLEEP, null, contentValues)
         db.close()
     }
-
+    fun displaySleep(): Cursor? {
+        val db = this.readableDatabase
+        return db.rawQuery("SELECT * FROM $TABLE_SLEEP", null)
+    }
 
     fun showSleepData(userID: Int, date: String):Int{
         val db=writableDatabase
@@ -133,9 +137,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         else{
             hourSlept = -1
         }
-
         cursor.close()
-
         return hourSlept
     }
 

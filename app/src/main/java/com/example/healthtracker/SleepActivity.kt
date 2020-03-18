@@ -10,12 +10,13 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.EditText
 import android.widget.Toast
+import kotlinx.android.synthetic.main.sleep.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class SleepActivity : AppCompatActivity() {
 
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint("SimpleDateFormat", "WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sleep)
@@ -23,6 +24,7 @@ class SleepActivity : AppCompatActivity() {
         val dbHelper = DatabaseHelper(this)
         val save = findViewById<View>(R.id.button) as Button
         val inputHours = findViewById<View>(R.id.editText) as EditText
+       // val displaySleep =findViewById<View>(R.id.displaySleep)as EditText
 
         save.setOnClickListener{
             val userID: Int = DatabaseHelper.currentUserID
@@ -35,15 +37,20 @@ class SleepActivity : AppCompatActivity() {
                 hours.isEmpty() -> {
                     inputHours.error="Field required"
                     inputHours.requestFocus()
+
                     return@setOnClickListener
                 }
                 dbHelper.hoursSleptExists(userID,date) -> {
                     inputHours.error="Hours slept for $date have already been added"
+                    Toast.makeText(this, "You have slept $hours hours on $date", Toast.LENGTH_LONG).show()
                     inputHours.requestFocus()
                     return@setOnClickListener
+
                 }
                 else -> {
                     dbHelper.insertSleepData(userID,hours.toInt(),date)
+                   // Toast.makeText(this, "You have slept $hours hours on $date", Toast.LENGTH_LONG).show()
+
                 }
             }
 
@@ -53,6 +60,7 @@ class SleepActivity : AppCompatActivity() {
             // Empty EditText after data insert
             inputHours.text.clear()
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -76,14 +84,14 @@ class SleepActivity : AppCompatActivity() {
             window.decorView.setBackgroundColor(Color.parseColor("#1A85FF"))
             return true
         }
-        if (id == R.id.red) {
+        if (id == R.id.lightGreen) {
             //red
-            window.decorView.setBackgroundColor(Color.parseColor("#C48282"))
+            window.decorView.setBackgroundColor(Color.parseColor("#e6ffe6"))
             return true
         }
-        if (id == R.id.limeGreen) {
+        if (id == R.id.pink) {
             //lime green
-            window.decorView.setBackgroundColor(Color.parseColor("#32CD32"))
+            window.decorView.setBackgroundColor(Color.parseColor("#ff99ff"))
             return true
         }
         if (id == R.id.lightBlue) {

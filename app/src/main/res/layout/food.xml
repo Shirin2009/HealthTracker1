@@ -5,7 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:typeface="serif"
+        android:padding="20dp">
 
+        <TextView
+            android:id="@+id/your_appoint_txt"
+            android:typeface="serif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Your Food"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            />
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -14,8 +30,8 @@
         android:text="Set your daily calorie goal"/>
 
     <com.github.mikephil.charting.charts.PieChart
-        android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:id="@+id/foodPieChart"/>
 
     <LinearLayout
@@ -26,10 +42,11 @@
             android:id="@+id/calsCons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Calories consumed"
-            android:inputType="number"
-            android:background="@null"
-            android:paddingTop="13dp"/>
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Calories Consumed"
+            android:paddingTop="13dp"
+            android:singleLine="true" />
 
         <TextView
             android:layout_width="50dp"

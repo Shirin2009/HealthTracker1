@@ -68,12 +68,13 @@ class FitnessActivity : AppCompatActivity() {
     }
 
     private fun setPieChartData() {
-        listColors.add(Color.BLUE)
+
         listColors.add(Color.RED)
         listColors.add(Color.GRAY)
         listColors.add(Color.GREEN)
         listColors.add(Color.CYAN)
         listColors.add(Color.MAGENTA)
+        listColors.add(Color.BLUE)
 
         for (x in 0..5){
             if(dbHelper.showFitnessData(userID, todayForm, types[x]) >= 0){
@@ -115,14 +116,14 @@ class FitnessActivity : AppCompatActivity() {
             window.decorView.setBackgroundColor(Color.parseColor("#1A85FF"))
             return true
         }
-        if (id == R.id.red) {
+        if (id == R.id.lightGreen) {
             //red
-            window.decorView.setBackgroundColor(Color.parseColor("#C48282"))
+            window.decorView.setBackgroundColor(Color.parseColor("#e6ffe6"))
             return true
         }
-        if (id == R.id.limeGreen) {
+        if (id == R.id.pink) {
             //lime green
-            window.decorView.setBackgroundColor(Color.parseColor("#32CD32"))
+            window.decorView.setBackgroundColor(Color.parseColor("#ff99ff"))
             return true
         }
         if (id == R.id.lightBlue) {
