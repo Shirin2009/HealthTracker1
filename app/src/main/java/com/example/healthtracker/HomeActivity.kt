@@ -34,6 +34,9 @@ class HomeActivity : AppCompatActivity() {
         img_food.setOnClickListener {
             startActivity(Intent(this, FoodActivity::class.java))
         }
+        img_cardiovascular.setOnClickListener {
+            startActivity(Intent(this, CardiovascularActivity::class.java))
+        }
 
         //button to link the home page to the stepCounter activity
         step_counter_btn.setOnClickListener{
@@ -52,6 +55,7 @@ class HomeActivity : AppCompatActivity() {
 
 
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.actionbar, menu)

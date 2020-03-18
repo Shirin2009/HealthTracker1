@@ -53,6 +53,13 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
             + COLUMN_SELECTED + " INTEGER,"
             + " FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID +"))")
 
+    //create Cardiovascular table SQL query
+    private val CREATE_TABLE_CARDIOVASCULAR = (" CREATE TABLE " + TABLE_CARDIOVASCULAR + "("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_USER_ID + " INTEGER,"
+            + COLUMN_DATETIME  + " TEXT DEFAULT CURRENT_TIMESTAMP,"
+            + COLUMN_HEART_RATE + " INTEGER,"
+            + " FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USER + "(" + COLUMN_ID +"))")
 
     //drop User table sql query
     private val DROP_USER_TABLE = " DROP TABLE IF EXISTS $TABLE_USER"
@@ -69,6 +76,8 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
     //drop Appointment table sql query
     private val DROP_APPOINTMENT_TABLE = " DROP TABLE IF EXISTS $TABLE_APPOINTMENT"
 
+    //drop Cardiovascular table sql query
+    private val DROP_CARDIOVASCULAR_TABLE = " DROP TABLE IF EXISTS $TABLE_CARDIOVASCULAR"
 
     //this function is called once ( the first time of the execution), it creates the database tables using SQL query
     override fun onCreate(db: SQLiteDatabase) {
@@ -77,6 +86,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         db.execSQL(CREATE_TABLE_FITNESS)
         db.execSQL(CREATE_TABLE_FOOD)
         db.execSQL(CREATE_TABLE_APPOINTMENT)
+        db.execSQL(CREATE_TABLE_CARDIOVASCULAR)
     }
 
     //this method will be called when we change the database version.
@@ -87,6 +97,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         db.execSQL(DROP_FITNESS_TABLE)
         db.execSQL(DROP_FOOD_TABLE)
         db.execSQL(DROP_APPOINTMENT_TABLE)
+        db.execSQL(DROP_CARDIOVASCULAR_TABLE)
         //create table again
         onCreate(db)
     }
@@ -119,6 +130,32 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         db.insert(TABLE_SLEEP, null, contentValues)
         db.close()
     }
+
+    //this method is for insert a data into database Cardiovascular table
+    fun insertCardiovascularData(userID: Int, heartRate: Int) {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_USER_ID, userID)
+        contentValues.put(COLUMN_HEART_RATE, heartRate)
+
+        //inserting row into database
+        db.insert(TABLE_CARDIOVASCULAR, null, contentValues)
+        db.close()
+    }
+
+    //this method is for insert a data into database Cardiovascular table
+    fun insertCardiovascularData(userID: Int, dateTime: String, heartRate: Int) {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_USER_ID, userID)
+        contentValues.put(COLUMN_DATETIME, dateTime)
+        contentValues.put(COLUMN_HEART_RATE, heartRate)
+
+        //inserting row into database
+        db.insert(TABLE_CARDIOVASCULAR, null, contentValues)
+        db.close()
+    }
+
     fun displaySleep(): Cursor? {
         val db = this.readableDatabase
         return db.rawQuery("SELECT * FROM $TABLE_SLEEP", null)
@@ -269,7 +306,6 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         db.close()
     }
 
-
     //this method is for insert a data into database Appointment table
     fun insertAppointmentData(userID: Int, description: String, date: String, time: String, room: String, doctorName: String, selected: Int) {
         val db = this.writableDatabase
@@ -338,16 +374,93 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         return appointments
     }
 
+    //get today's average heart rate of a user
+    fun todaysAverageHeartRate(userID: Int):Int {
+        val db=writableDatabase
+        val query= "select * from cardiovascular where userId = '$userID' and dateTime between datetime('now', 'start of day') AND datetime('now', 'localtime')"
+        val cursor = db.rawQuery(query,null)
+        var heartRate = 0
+        var list: MutableList<Int>? = null
+
+        if(cursor != null) {
+            for (i in 1..cursor.count) {
+                if (i==1) {
+                    cursor.moveToFirst()
+                    list = mutableListOf((cursor.getString(cursor.getColumnIndex(COLUMN_HEART_RATE))).toInt())
+                } else {
+                    cursor.moveToNext()
+                    list?.add((cursor.getString(cursor.getColumnIndex(COLUMN_HEART_RATE))).toInt())
+                }
+            }
+        }
+        if (list != null) {
+            heartRate = list.average().toInt()
+        }
+        cursor.close()
+        return heartRate
+    }
+
+    //get weekly average heart rate of a user(last 7 days from current date)
+    fun weeklyAverageHeartRate(userID: Int):Int {
+        val db=writableDatabase
+        val query= "select * from cardiovascular where userId = '$userID' and dateTime between datetime('now', '-7 days') AND datetime('now', 'localtime')"
+        val cursor = db.rawQuery(query,null)
+        var heartRate = 0
+        var list: MutableList<Int>? = null
+
+        if(cursor != null) {
+            for (i in 1..cursor.count) {
+                if (i==1) {
+                    cursor.moveToFirst()
+                    list = mutableListOf((cursor.getString(cursor.getColumnIndex(COLUMN_HEART_RATE))).toInt())
+                } else {
+                    cursor.moveToNext()
+                    list?.add((cursor.getString(cursor.getColumnIndex(COLUMN_HEART_RATE))).toInt())
+                }
+            }
+        }
+        if (list != null) {
+            heartRate = list.average().toInt()
+        }
+        cursor.close()
+        return heartRate
+    }
+
+    //get monthly average heart rate of a user(last 1 month from current date)
+    fun monthlyAverageHeartRate(userID: Int):Int {
+        val db=writableDatabase
+        val query= "select * from cardiovascular where userId = '$userID' and dateTime between datetime('now', '-1 months') AND datetime('now', 'localtime')"
+        val cursor = db.rawQuery(query,null)
+        var heartRate = 0
+        var list: MutableList<Int>? = null
+
+        if(cursor != null) {
+            for (i in 1..cursor.count) {
+                if (i==1) {
+                    cursor.moveToFirst()
+                    list = mutableListOf((cursor.getString(cursor.getColumnIndex(COLUMN_HEART_RATE))).toInt())
+                } else {
+                    cursor.moveToNext()
+                    list?.add((cursor.getString(cursor.getColumnIndex(COLUMN_HEART_RATE))).toInt())
+                }
+            }
+        }
+        if (list != null) {
+            heartRate = list.average().toInt()
+        }
+        cursor.close()
+        return heartRate
+    }
+
     //update appointments table
     fun updateAppointment(userID: Int, appointmentID:Int) {
         val db=writableDatabase
         db.execSQL("UPDATE appointment SET selected = 1 , userId = $userID WHERE selected = 0 AND id = $appointmentID;")
-
     }
 
     companion object {
         //database version
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 3
 
         //database name
         const val DATABASE_NAME = "user.db"
@@ -358,6 +471,7 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         const val TABLE_FITNESS = "fitness"
         const val TABLE_FOOD = "food"
         const val TABLE_APPOINTMENT = "appointment"
+        const val TABLE_CARDIOVASCULAR = "cardiovascular"
 
         //ID column @primary key
         const val COLUMN_ID = "id"
@@ -391,6 +505,9 @@ class DatabaseHelper(context: Context?):SQLiteOpenHelper(context, DATABASE_NAME,
         const val COLUMN_SELECTED = "selected"
         const val COLUMN_DATE ="date"
 
+        //column names for cardiovascular details
+        const val COLUMN_HEART_RATE = "heartRate"
+        const val COLUMN_DATETIME = "dateTime"
 
         var currentUserID:Int = 0
     }

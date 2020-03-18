@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
             val email= email_registration.text.toString().trim()
             val password = password_registration.text.toString().trim()
             val name  = full_name_registration.text.toString().trim()
-            val drName = dr_name_registration.text.toString()
             val age = age_registration.text.toString()
 
             //warn the user for the required information if they don't put any
@@ -58,11 +57,6 @@ class MainActivity : AppCompatActivity() {
                 age.isEmpty()->{
                     age_registration.error="Age required"
                     age_registration.requestFocus()
-                    return@setOnClickListener
-                }
-                drName.isEmpty()->{
-                    dr_name_registration.error="DR name required"
-                    dr_name_registration.requestFocus()
                     return@setOnClickListener
                 }
 
@@ -107,6 +101,12 @@ class MainActivity : AppCompatActivity() {
            if(dbHelper.userExists(login_email_txt_login.text.toString(), password_txt_login.text.toString())) {
                dbHelper.insertAppointmentData(0,"Coronavirus", "03/18/2020", "12:00", "2a", "Harvey Specter", 0)
                dbHelper.insertAppointmentData(0,"Coronavirus2", "03/18/2020", "13:00", "3b", "Sam Winchester", 0)
+               dbHelper.insertCardiovascularData(DatabaseHelper.currentUserID,"2020-03-18 12:00:00",60)
+               dbHelper.insertCardiovascularData(DatabaseHelper.currentUserID,"2020-03-18 15:00:00",62)
+               dbHelper.insertCardiovascularData(DatabaseHelper.currentUserID,"2020-03-17 11:00:00",65)
+               dbHelper.insertCardiovascularData(DatabaseHelper.currentUserID,"2020-03-16 19:00:00",70)
+               dbHelper.insertCardiovascularData(DatabaseHelper.currentUserID,"2020-02-25 18:00:00",75)
+               dbHelper.insertCardiovascularData(DatabaseHelper.currentUserID,"2020-03-03 13:00:00",80)
                startActivity(Intent(this, HomeActivity::class.java))
            }
 

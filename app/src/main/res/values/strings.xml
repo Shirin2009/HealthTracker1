@@ -14,5 +14,14 @@
     <string name="fitness">Fitness</string>
     <string name="enter_hours_slept">Enter hours slept:</string>
     <string name="urgent_appointment">Urgent Appointment</string>
+    <string name="enter_heart_rate_while_resting">Enter heart rate (while resting):</string>
+    <string name="today_s_average_heart_rate">Today\'s average heart rate:</string>
+    <string name="weekly_average_heart_rate">Weekly average heart rate:</string>
+    <string name="monthly_average_heart_rate">Monthly average heart rate:</string>
+    <string name="food">Food</string>
+    <string name="logout">LogOut</string>
+    <string name="sleep">Sleep</string>
+    <string name="cardiovascular">Cardiovascular</string>
+    <string name="step_counter">Step Counter</string>
 
 </resources>

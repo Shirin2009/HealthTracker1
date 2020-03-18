@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.healthtracker">
-<uses-feature android:name="android.hardware.sensor.stepcounter" android:required="true"/>
-    <uses-feature android:name="android.hardware.sensor.stepdetector" android:required="true"/>
+
+    <uses-feature
+        android:name="android.hardware.sensor.stepcounter"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.sensor.stepdetector"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -12,31 +17,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action
-                    android:name="android.intent.action.MAIN"/>
-                <category
-                    android:name="android.intent.category.LAUNCHER"      />
-            </intent-filter>
-        </activity>
-        <activity android:name=".MainActivity"
+        <activity android:name=".CardiovascularActivity"></activity>
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
         <activity android:name=".UserModel" />
-        <activity android:name=".HomeActivity"/>
-        <activity android:name=".AppointmentsActivity"/>
-        <activity android:name=".FitnessActivity"/>
-        <activity android:name=".FoodActivity"/>
-        <activity android:name=".SleepActivity"/>
-        <activity android:name=".TimerActivity"/>
-        <activity android:name=".NotificationActivity"/>
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".AppointmentsActivity" />
+        <activity android:name=".FitnessActivity" />
+        <activity android:name=".FoodActivity" />
+        <activity android:name=".SleepActivity" />
+        <activity android:name=".TimerActivity" />
+        <activity android:name=".NotificationActivity" />
     </application>
+
 </manifest>
